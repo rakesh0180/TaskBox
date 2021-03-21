@@ -20,6 +20,7 @@
         const ulTag = document.querySelector("ul");
         const h2Tag = document.querySelector("h2");
         const spanTag = document.querySelector("span");
+
         const handleSubmit = (e) => {
             e.preventDefault();
             const task = {
@@ -33,26 +34,29 @@
             //reset method will rest the form after read the values from input field
             e.target.reset();
             console.log(tasks);
+            liCreateElement(task);
+        };
 
-            //add the element to list
+        //add the element to list
+        const liCreateElement = (task) => {
             const liTag = document.createElement("li");
             // liTag.textContent = task[title] // return error
             liTag.textContent = task.title;
             console.log(task.title);
             ulTag.appendChild(liTag);
 
-            //count and display number of tasks
-            /*
-                        h2Tag.textContent = `My task -${tasks.length}`
-                      or
-                       */
+            //count and display number of task
+            // h2Tag.textContent = `My task -${tasks.length}`
+
             spanTag.textContent = tasks.length;
             spanTag.style.color = "red";
+            liRemoveElement(liTag, tasks);
+        };
 
-            //remove element from list and
+        //remove element from list and update count
+        const liRemoveElement = (liTag, task) => {
             liTag.addEventListener("click", () => {
                 ulTag.removeChild(liTag);
-
                 //splice method is used to remove arr ele at any position but it need index
                 //findIndex return the index of element
                 const index = tasks.findIndex((arrTask) => {
