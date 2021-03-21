@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Task box</title>
+</head>
+
+<body>
+    <form onsubmit="handleSubmit(event)">
+        <h1>TaskBox</h1>
+        <input type="text" name="title" placeholder="Enter task name" />
+    </form>
+    <h2>My task -<span>0</span></h2>
+    <ul></ul>
+    <script>
+        const tasks = [];
+        const ulTag = document.querySelector("ul");
+        const h2Tag = document.querySelector("h2");
+        const spanTag = document.querySelector("span");
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            const task = {
+                id: Number(new Date()),
+                title: e.target.title.value,
+            };
+            tasks.push(task);
+            //create  item in localStorage
+            localStorage.setItem(task.id, task.title);
+
+            //reset method will rest the form after read the values from input field
+            e.target.reset();
+            console.log(tasks);
+
+            //add the element to list
+            const liTag = document.createElement("li");
+            // liTag.textContent = task[title] // return error
+            liTag.textContent = task.title;
+            console.log(task.title);
+            ulTag.appendChild(liTag);
+
+            //count and display number of tasks
+            /*
+                        h2Tag.textContent = `My task -${tasks.length}`
+                      or
+                       */
+            spanTag.textContent = tasks.length;
+            spanTag.style.color = "red";
+
+            //remove element from list and
+            liTag.addEventListener("click", () => {
+                ulTag.removeChild(liTag);
+
+                //splice method is used to remove arr ele at any position but it need index
+                //findIndex return the index of element
+                const index = tasks.findIndex((arrTask) => {
+                    return arrTask.id == task.id;
+                    // tasks.splice(tasks,0)
+                });
+                //
+
+                tasks.splice(index, 1);
+                spanTag.textContent = tasks.length;
+                // console.log(tasks);
+            });
+        };
+    </script>
+</body>
+
+</html>
